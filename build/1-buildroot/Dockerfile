@@ -1,7 +1,11 @@
 # docker build -t ghcr.io/jbatonnet/rinkhals/buildroot -f build/1-buildroot/Dockerfile build/1-buildroot
 # docker push ghcr.io/jbatonnet/rinkhals/buildroot
 
-# docker run --rm -it -v .\build\buildroot:/config -v .\build\target:/output ghcr.io/jbatonnet/rinkhals/buildroot
+# docker run -it -v .\build\1-buildroot:/config -v .\files:/files ghcr.io/jbatonnet/rinkhals/buildroot
+#   cp /config/.config .
+#   cp /config/busybox.config .
+#   make
+#   ./copy-output.sh
 
 FROM debian:12.8
 
@@ -17,8 +21,11 @@ RUN locale-gen en_US.utf8
 WORKDIR /buildroot
 RUN git clone https://gitlab.com/buildroot.org/buildroot.git --depth=1 --branch=2023.02.6 /buildroot
 
+COPY external /buildroot/external
+
 COPY gcc-target.patch /buildroot/
 RUN git apply gcc-target.patch
 
-COPY .config /buildroot/
-COPY prepare-final.sh /buildroot/
+COPY copy-output.sh /buildroot/
+
+ENV BR2_EXTERNAL="./external"

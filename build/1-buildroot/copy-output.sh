@@ -20,6 +20,7 @@ rm -rf ./output/final/tmp
 rm -rf ./output/final/usr/lib32
 rm -rf ./output/final/var
 rm ./output/final/THIS_IS_NOT_YOUR_ROOT_FILESYSTEM
+rm ./output/final/linuxrc
 
 # Clean /etc except for ssl
 for dir in ./output/final/etc/*; do
@@ -41,6 +42,6 @@ rm -rf ./output/final/usr/lib/python3.*/site-packages/*
 find ./output/final/usr/lib/python3.* -name '*.pyc' -type f -delete
 
 # Copy output to volume mount and derefence symlinks
-mkdir -p /config/output/final
-rm -rf /config/output/final/*
-cp -pr -L ./output/final/* /config/output/final/
+mkdir -p /files/1-buildroot
+rm -rf /files/1-buildroot/*
+cp -pr -L ./output/final/* /files/1-buildroot/
