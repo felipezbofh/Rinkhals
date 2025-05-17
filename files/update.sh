@@ -150,6 +150,10 @@ cp -f $SOURCE_PATH/start-rinkhals.sh /useremain/rinkhals/start-rinkhals.sh
 cp -f $SOURCE_PATH/start.sh.patch /useremain/rinkhals/start.sh.patch
 echo $(basename $TARGET_PATH) > /useremain/rinkhals/.version
 
+if [ ${CURRENT_RINKHALS_PATH} ! = ${TARGET_PATH}  ] ; then 
+    rm -rf ${CURRENT_RINKHALS_PATH}
+fi    
+
 rm /useremain/rinkhals/.disable-rinkhals 2> /dev/null
 
 
